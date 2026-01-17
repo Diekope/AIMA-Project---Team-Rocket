@@ -110,7 +110,9 @@ def extract_all_faces_in_folder(persons_folder, save_folder):
 
 
 # -------------------------- Main Program --------------------------------
-save_folder = "faces"
-extract_folder = "persons"
+script_dir = os.path.dirname(os.path.abspath(__file__)) 
+root_dir = os.path.dirname(script_dir)
+save_folder = os.path.join(root_dir, "faces")
+extract_folder = os.path.join(root_dir, "working")
 #extract_all_faces_in_folder(extract_folder, save_folder)
 
