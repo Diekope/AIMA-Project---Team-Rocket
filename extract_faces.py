@@ -1,12 +1,14 @@
 """
         _summary_: Extract faces from images using RetinaFace model.
 """
+from deepface import DeepFace
 from retinaface import RetinaFace
 from PIL import Image
 import numpy as np
 import os
+import json
 
-def extract_faces(image_path, filename):
+def extract_faces(image_path, filename, save_folder):
     """
     Extract faces from one single image and save them in the save_folder
     """
@@ -29,7 +31,7 @@ def extract_faces(image_path, filename):
         for id, values in faces.items():
             if "score" in values:
                 # We filter the false positive with a threshold of 0.9 for face detection
-                if values["score"] > 0.9:
+                if values["score"] > 0.8:
                     real_faces[id] = values
         
         # We check that the rectangle stays within the image boundaries
@@ -54,14 +56,44 @@ def extract_faces(image_path, filename):
             y1 = int(max(0, y1))
             x2 = int(min(width, x2))
             y2 = int(min(height, y2))
+            
             """
-            Step 2 : Extraction faces and save them in the save_folder
+            Step 2 : Extraction faces
             """
             face = img[y1:y2, x1:x2] # Extract face from the image
-            Image.fromarray(face).save(os.path.join(sub_folder_path,os.path.splitext(filename)[0]+f"_face_{id}.png"))
+            
+            """
+            Step 3 : Analysis characteristics of the extracted face
+            """
+            try:
+                analysis = DeepFace.analyze(face, actions=['age', 'gender', 'emotion'], enforce_detection=False)
+                face_analysis = analysis[0]
+                characteristics = {
+                    "filename": filename,
+                    "face_id": id,
+                    "age": face_analysis['age'],
+                    "emotion": face_analysis['dominant_emotion'],
+                    "gender": face_analysis['dominant_gender']
+                }
+            except Exception as ex:
+                print(f"Error analyzing face id {id} in image {filename}: {ex}")
+                
+            """
+            Step 4 : Save of faces and their characteristics
+            """
+            # Save faces (.png)
+            images_folder = os.path.join(sub_folder_path, "images")
+            json_folder = os.path.join(sub_folder_path, "characteristics")
+            os.makedirs(images_folder, exist_ok=True)
+            os.makedirs(json_folder, exist_ok=True)
+            Image.fromarray(face).save(os.path.join(images_folder,os.path.splitext(filename)[0]+f"_face_{id}.png"))
+            
+            # Save characteristics in a json file
+            with open(os.path.join(json_folder, os.path.splitext(filename)[0]+f"_face_{id}_characteristics.json"), 'w') as f:
+                json.dump(characteristics, f, indent=4)
 
 
-def extract_all_faces_in_folder(persons_folder):
+def extract_all_faces_in_folder(persons_folder, save_folder):
     if not os.path.exists(save_folder):
         # If the folder doesn't exist, we create it
         os.makedirs(save_folder, exist_ok=True)
@@ -72,12 +104,13 @@ def extract_all_faces_in_folder(persons_folder):
             print(f"Error: Folder {save_folder} does not exist.")
             break
         
-        os.makedirs(save_folder, exist_ok=True)
-        img_path = os.path.join(persons_folder, img)
-        extract_faces(img_path, img)
+        if os.path.splitext(img)[1].lower() in [".jpg", ".jpeg", ".png"]:
+            img_path = os.path.join(persons_folder, img)
+            extract_faces(img_path, img, save_folder)
 
 
 # -------------------------- Main Program --------------------------------
 save_folder = "faces"
 extract_folder = "persons"
+#extract_all_faces_in_folder(extract_folder, save_folder)
 
