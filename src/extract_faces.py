@@ -81,12 +81,12 @@ def extract_faces(image_path, filename, save_folder):
             """
             Step 4 : Save of faces and their characteristics
             """
-            # Save faces (.png)
+            # Save faces (.jpg)
             images_folder = os.path.join(sub_folder_path, "images")
             json_folder = os.path.join(sub_folder_path, "characteristics")
             os.makedirs(images_folder, exist_ok=True)
             os.makedirs(json_folder, exist_ok=True)
-            Image.fromarray(face).save(os.path.join(images_folder,os.path.splitext(filename)[0]+f"_face_{id}.png"))
+            Image.fromarray(face).save(os.path.join(images_folder,os.path.splitext(filename)[0]+f"_face_{id}.jpg"))
             
             # Save characteristics in a json file
             with open(os.path.join(json_folder, os.path.splitext(filename)[0]+f"_face_{id}_characteristics.json"), 'w') as f:
@@ -114,5 +114,5 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 root_dir = os.path.dirname(script_dir)
 save_folder = os.path.join(root_dir, "faces")
 extract_folder = os.path.join(root_dir, "working")
-#extract_all_faces_in_folder(extract_folder, save_folder)
+extract_all_faces_in_folder(extract_folder, save_folder)
 

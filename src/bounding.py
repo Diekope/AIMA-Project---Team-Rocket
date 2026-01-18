@@ -27,7 +27,7 @@ def exploit_image(img, img_name, save_folder):
 
             area = result.orig_img[y1:y2, x1:x2]
 
-            save_name = f"{img_name}-person-{nn}-bb-{x1}-{y1}-{x2}-{y2}.png"
+            save_name = f"{img_name}-person-{nn}-bb-{x1}-{y1}-{x2}-{y2}.jpg"
             save_path = os.path.join(save_folder, save_name)
 
             cv2.imwrite(save_path, area)
@@ -46,4 +46,4 @@ def run_people_boxes_extraction(persons_folder):
     else:
         print(f"Dossier {persons_folder} inexistant")
 
-#run_people_boxes_extraction(persons_folder)
+run_people_boxes_extraction(persons_folder)
