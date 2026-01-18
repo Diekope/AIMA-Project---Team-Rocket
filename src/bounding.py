@@ -2,15 +2,15 @@ import os
 import cv2
 from ultralytics import YOLO
 
-# Fonctionnement de base 
-model = YOLO("yolo11n.pt")
+# Fonctionnement de base
+script_dir = os.path.dirname(os.path.abspath(__file__)) 
+model = YOLO(os.path.join(script_dir, "yolo11n.pt"))
+root_dir = os.path.dirname(script_dir)
+persons_folder = os.path.join(root_dir, "persons")
+save_folder = os.path.join(root_dir, "working")
 
 # Pour réaliser une prédiction :
 # results = model("persons/a.png", show=True)
-
-# Partie poyr tout faire dans un dossier
-persons_folder = "persons" # À changer si nécessaire
-save_folder = "working"
 
 def exploit_image(img, img_name, save_folder):
     img_name = os.path.splitext(img_name)[0]
@@ -45,3 +45,5 @@ def run_people_boxes_extraction(persons_folder):
             exploit_image(img_path, img, save_folder)
     else:
         print(f"Dossier {persons_folder} inexistant")
+
+#run_people_boxes_extraction(persons_folder)
