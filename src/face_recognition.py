@@ -9,10 +9,9 @@ def predict_celebrity(face_path, model, name_model):
     img = cv2.imread(face_path)
     if img is None:
         raise FileNotFoundError(face_path)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     img = cv2.resize(img, (224, 224))
     x = np.expand_dims(img.astype(np.float32), axis=0)
-    
+
     if name_model =="vgg16":
         x = preprocess_input(x, version=1)  
     else:
