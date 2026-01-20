@@ -12,7 +12,7 @@ h5py==3.14.0
 idna==3.11
 importlib_metadata==8.7.1
 Keras-Applications==1.0.8
-keras_vggface @ git+https://github.com/rcmalli/keras-vggface.git
+# keras_vggface @ git+https://github.com/rcmalli/keras-vggface.git
 libclang==18.1.1
 Markdown==3.9
 markdown-it-py==3.0.0
@@ -22,7 +22,7 @@ ml_dtypes==0.5.4
 namex==0.1.0
 numpy==1.23.5
 oauthlib==3.3.1
-opencv-python==4.7.0.72
+# opencv-python==4.7.0.72
 opt_einsum==3.4.0
 optree==0.18.0
 packaging==25.0
