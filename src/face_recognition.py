@@ -41,4 +41,5 @@ def main():
 
     model = model_choice(name_model)
     print(predict_celebrity("./src/visage.jpg",model,name_model))
-main()
+
+# main()
