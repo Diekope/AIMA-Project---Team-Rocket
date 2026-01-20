@@ -4,7 +4,6 @@ from ultralytics import YOLO
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.dirname(script_dir)
-print(project_root)
 model = YOLO(os.path.join(script_dir, "yolo11n.pt"))
 save_folder_ = os.path.join(project_root, "img", "working")
 os.makedirs(save_folder_, exist_ok=True)
