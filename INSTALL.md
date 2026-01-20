@@ -25,4 +25,4 @@ pip install -r src/requirements.txt
 
 Il y aura surement un message d'erreur de dépendances mais ne faites pas attention à cela.
 
-Et après toutes ces étapes, vous pourrez enfin exécuter le tout
+Et après toutes ces étapes, vous pourrez enfin exécuter le script voulu.
