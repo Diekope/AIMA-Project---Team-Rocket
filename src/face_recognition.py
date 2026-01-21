@@ -21,7 +21,11 @@ def predict_celebrity(face_path, model, name_model):
     decoded = decode_predictions(preds)[0]
     print(decoded)
     name = decoded[0][0].replace("b'","").replace("'","")
-    return name
+    name = name.replace("_", " ")
+
+    max_element = max(decoded, key=lambda x: x[1])
+    prob = max_element[1]
+    return name, prob
 
 def model_choice(name_model):
     if name_model =="vgg16":
@@ -34,12 +38,18 @@ def model_choice(name_model):
         raise ValueError("The model name is wrong")
     return model
 
+def pipeline_recognition(img, model_):
+    model = model_choice(model_)
+    name, prob = predict_celebrity(img, model, model_)
+
+    return name, prob
+
 def main():
     # name_model = "vgg16"
     name_model = "senet50"
     # name_model = "senet50"
 
     model = model_choice(name_model)
-    print(predict_celebrity("./src/visage.jpg",model,name_model))
+    print(predict_celebrity("/Users/ValQuiTravaille/Projects/AIMA-Project---Team-Rocket/img/working/b/b-person-0-bb-14-36-163-267_face_1.jpg",model,name_model))
 
 # main()

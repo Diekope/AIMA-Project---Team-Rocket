@@ -20,11 +20,23 @@ def split_bodies_and_save_faces(img, img_name, working_folder=working_folder_):
 
     if working_folder:
         people_folder = os.path.join(working_folder_, working_folder)
-        # print(people_folder)
 
         for img_file in os.listdir(people_folder): 
             if img_file.startswith('.') or not img_file.lower().endswith(('.jpg', '.jpeg', '.png')):
                 continue
             else:
                 img_path = os.path.join(people_folder, img_file)
-                extract_faces(img_path, f"{img_file}_face", people_folder)
+                extract_faces(img_path, f"{img_file}", people_folder)
+        
+    return people_folder
+
+    
+def get_results(working_folder):
+    # Récupération des jsons pour extraire les visages
+    persons_jsons = []
+    for element in os.listdir(working_folder):
+        if element.lower().endswith('.json'):
+            print(element)
+            persons_jsons.append(working_folder + '/' + element)
+
+    return persons_jsons

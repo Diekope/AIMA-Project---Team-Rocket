@@ -13,7 +13,7 @@ project_root = os.path.dirname(script_dir)
 
 
 def extract_faces(image_path, filename, save_folder):
-    print(f"DEBUG : \nImage path: {image_path}\nFilename: {filename}\nSave Floder: {save_folder}")
+    # print(f"DEBUG : \nImage path: {image_path}\nFilename: {filename}\nSave Floder: {save_folder}")
 
 
     """
@@ -72,11 +72,14 @@ def extract_faces(image_path, filename, save_folder):
             """
             Step 3 : Analysis characteristics of the extracted face
             """
+            single_face_name = os.path.splitext(filename)[0]+f"_{id}.jpg"
             try:
                 analysis = DeepFace.analyze(face, actions=['age', 'gender', 'emotion'], enforce_detection=False)
                 face_analysis = analysis[0]
                 characteristics = {
-                    "filename": filename,
+                    "path": save_folder,
+                    "original": filename,
+                    "filename": single_face_name,
                     "face_id": id,
                     "age": face_analysis['age'],
                     "emotion": face_analysis['dominant_emotion'],
@@ -96,17 +99,17 @@ def extract_faces(image_path, filename, save_folder):
             # os.makedirs(json_folder, exist_ok=True)
             # Image.fromarray(face).save(os.path.join(images_folder,os.path.splitext(filename)[0]+f"_{id}.jpg"))
 
-            Image.fromarray(face).save(os.path.join(save_folder, os.path.splitext(filename)[0]+f"_{id}.jpg"))
+            Image.fromarray(face).save(os.path.join(save_folder, single_face_name))
 
             print(f"Face {filename} saved !")
             
             # Save characteristics in a json file
             # with open(os.path.join(json_folder, os.path.splitext(filename)[0]+f"_face_{id}_characteristics.json"), 'w') as f:
             json_path = os.path.splitext(filename)[0]+f"_{id}_characteristics.json"
-            print(json_path)
             with open(os.path.join(save_folder, json_path), 'w') as f:
                 json.dump(characteristics, f, indent=4)
 
+            print(f"JSON {json_path} saved !")
 
 def extract_all_faces_in_folder(persons_folder, save_folder):
     if not os.path.exists(save_folder):
