@@ -18,6 +18,7 @@ Par la suite, installez les librairies suivante via pip et conda :
 conda install -c conda-forge tensorflow=2.11
 pip install git+https://github.com/rcmalli/keras-vggface.git
 pip install opencv-python
+pip install streamlit
 ```
 
 Enfin, installez les librairies restantes :
