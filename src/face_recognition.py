@@ -5,7 +5,9 @@ from keras_vggface.utils import preprocess_input, decode_predictions
 
 
 def predict_celebrity(face_path, model, name_model):
-
+    """
+    To give a list of predicted celebrities for a face
+    """
     img = cv2.imread(face_path)
     if img is None:
         raise FileNotFoundError(face_path)
@@ -28,6 +30,9 @@ def predict_celebrity(face_path, model, name_model):
     return name, prob
 
 def model_choice(name_model):
+    """
+    Loads and return the selected model
+    """
     if name_model =="vgg16":
         model = VGGFace(model="vgg16", include_top=True)
     elif name_model =="resnet50":
@@ -39,6 +44,9 @@ def model_choice(name_model):
     return model
 
 def pipeline_recognition(img, model_):
+    """
+    Load a model and predict the celebirty of a given image
+    """
     model = model_choice(model_)
     name, prob = predict_celebrity(img, model, model_)
 

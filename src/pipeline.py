@@ -5,9 +5,6 @@ import os
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 working_folder_ = os.path.join(project_root, "img/working")
 
-# print(working_folder)
-
-
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
@@ -30,7 +27,6 @@ def split_bodies_and_save_faces(img, img_name, working_folder=working_folder_):
         
     return people_folder
 
-    
 def get_results(working_folder):
     # Récupération des jsons pour extraire les visages
     persons_jsons = []

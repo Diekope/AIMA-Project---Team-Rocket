@@ -13,9 +13,6 @@ project_root = os.path.dirname(script_dir)
 
 
 def extract_faces(image_path, filename, save_folder):
-    # print(f"DEBUG : \nImage path: {image_path}\nFilename: {filename}\nSave Floder: {save_folder}")
-
-
     """
     Extract faces from one single image and save them in the save_folder
     """
@@ -25,10 +22,6 @@ def extract_faces(image_path, filename, save_folder):
     img = img.convert("RGB")
     img = np.array(img) # Convert to array for processing
     height, width, channels = img.shape
-    
-    # Create a sub_folder for each image to store the extracted faces
-    # sub_folder_path = os.path.join(save_folder, os.path.splitext(filename)[0])
-    # os.makedirs(sub_folder_path, exist_ok=True)
     
     """
     Step 1 : Data cleansing
@@ -91,20 +84,11 @@ def extract_faces(image_path, filename, save_folder):
             """
             Step 4 : Save of faces and their characteristics
             """
-            # Save faces (.jpg)
-            # images_folder = os.path.join(sub_folder_path, "images")
-            # json_folder = os.path.join(sub_folder_path, "characteristics")
-
-            # os.makedirs(images_folder, exist_ok=True)
-            # os.makedirs(json_folder, exist_ok=True)
-            # Image.fromarray(face).save(os.path.join(images_folder,os.path.splitext(filename)[0]+f"_{id}.jpg"))
-
             Image.fromarray(face).save(os.path.join(save_folder, single_face_name))
 
             print(f"Face {filename} saved !")
             
             # Save characteristics in a json file
-            # with open(os.path.join(json_folder, os.path.splitext(filename)[0]+f"_face_{id}_characteristics.json"), 'w') as f:
             json_path = os.path.splitext(filename)[0]+f"_{id}_characteristics.json"
             with open(os.path.join(save_folder, json_path), 'w') as f:
                 json.dump(characteristics, f, indent=4)
