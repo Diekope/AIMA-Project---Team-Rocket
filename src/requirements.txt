@@ -11,9 +11,8 @@ grpcio==1.76.0
 h5py==3.14.0
 idna==3.11
 importlib_metadata==8.7.1
-keras==2.11.0
 Keras-Applications==1.0.8
-keras_vggface @ git+https://github.com/rcmalli/keras-vggface.git@bee35376e76e35d00aeec503f2f242611a97b38a
+# keras_vggface @ git+https://github.com/rcmalli/keras-vggface.git
 libclang==18.1.1
 Markdown==3.9
 markdown-it-py==3.0.0
@@ -23,12 +22,12 @@ ml_dtypes==0.5.4
 namex==0.1.0
 numpy==1.23.5
 oauthlib==3.3.1
-opencv-python==4.7.0.72
+# opencv-python==4.7.0.72
 opt_einsum==3.4.0
 optree==0.18.0
 packaging==25.0
 pillow==11.3.0
-protobuf==3.19.6
+protobuf==3.20.3
 pyasn1==0.6.2
 pyasn1_modules==0.4.2
 Pygments==2.19.2
@@ -39,10 +38,10 @@ rich==14.2.0
 rsa==4.9.1
 scipy==1.13.1
 six==1.17.0
+# tensorflow==2.11
 tensorboard==2.11.2
 tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.1
-tensorflow==2.11.0
 tensorflow-estimator==2.11.0
 tensorflow-io-gcs-filesystem==0.37.1
 termcolor==3.1.0

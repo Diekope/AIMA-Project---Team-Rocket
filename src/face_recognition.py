@@ -48,5 +48,5 @@ def main():
     # name_model = "senet50"
 
     model = model_choice(name_model)
-    print(predict_celebrity("./img/visage.jpg",model,name_model))
+    print(predict_celebrity("./img/Zoe_Saldana.jpg",model,name_model))
 main()
