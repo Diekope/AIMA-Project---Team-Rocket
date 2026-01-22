@@ -9,15 +9,23 @@ def predict_celebrity(face_path, model, name_model):
     img = cv2.imread(face_path)
     if img is None:
         raise FileNotFoundError(face_path)
+    
+    # Image must be resized to 224x224 (VGG required dimensions)
     img = cv2.resize(img, (224, 224))
+    # 3D to 4D multidimensional array (=tensor) (expected by neural network)
     x = np.expand_dims(img.astype(np.float32), axis=0)
 
+    # Preprocessing array values to match model requirements
+    # (Subtracts the mean RGB values for version 1 and
+    # Scales pixel values to the range -1 to +1 for version 2)
     if name_model =="vgg16":
         x = preprocess_input(x, version=1)  
     else:
         x = preprocess_input(x, version=2)
 
+    # Feed model with image and get predictions with a confident score
     preds = model.predict(x)
+    # Decore predictions ot a human-readable answer (celebrity name and confident score)
     decoded = decode_predictions(preds)[0]
     print(decoded)
     name = decoded[0][0].replace("b'","").replace("'","")
@@ -35,10 +43,10 @@ def model_choice(name_model):
     return model
 
 def main():
-    # name_model = "vgg16"
-    name_model = "senet50"
+    name_model = "vgg16"
+    # name_model = "resnet50"
     # name_model = "senet50"
 
     model = model_choice(name_model)
-    print(predict_celebrity("./src/visage.jpg",model,name_model))
+    print(predict_celebrity("./img/visage.jpg",model,name_model))
 main()
